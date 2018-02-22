@@ -1,0 +1,3 @@
+---
+user_setup_shell: "/bin/sh"
+user_setup_home: "/home/{{ user_setup_username }}"
