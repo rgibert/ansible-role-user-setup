@@ -2,6 +2,11 @@
 
 Ansible role to handle common user / group setup
 
+https://img.shields.io/github/issues/rgibert/ansible-role-user-setup.svg
+https://img.shields.io/github/forks/rgibert/ansible-role-user-setup.svg
+https://img.shields.io/github/stars/rgibert/ansible-role-user-setup.svg
+https://img.shields.io/github/license/rgibert/ansible-role-user-setup.svg
+
 ## Requirements
 
 - none
