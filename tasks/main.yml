@@ -1,12 +1,16 @@
 ---
-- name: create group
-  group:
-    name: "{{ user_setup_group }}"
+- block:
 
-- name: create users
-  user:
-    name: "{{ user_setup_username }}"
-    group: "{{ user_setup_group }}"
-    shell: "{{ user_setup_shell }}"
-    home: "{{ user_setup_home }}"
+  - name: create group
+    group:
+      name: "{{ user_setup_group }}"
 
+  - name: create users
+    user:
+      name: "{{ user_setup_username }}"
+      group: "{{ user_setup_group }}"
+      shell: "{{ user_setup_shell }}"
+      home: "{{ user_setup_home }}"
+
+  tags:
+    - user_setup
