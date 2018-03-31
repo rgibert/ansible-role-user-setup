@@ -5,7 +5,7 @@
     group:
       name: "{{ user_setup_group }}"
     when:
-      - user_setup_group != root
+      - user_setup_group != "root"
 
   - name: create users
     user:
@@ -14,7 +14,7 @@
       shell: "{{ user_setup_shell }}"
       home: "{{ user_setup_home }}"
     when:
-      - user_setup_username != root
+      - user_setup_username != "root"
 
   tags:
     - user_setup
