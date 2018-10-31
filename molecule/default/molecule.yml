@@ -6,20 +6,8 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: centos-6
-    image: centos:6
-  - name: centos-7
-    image: centos:7
-  - name: ubuntu-artful
-    image: ubuntu:artful
-  - name: ubuntu-bionic
-    image: ubuntu:bionic
-  - name: ubuntu-cosmic
-    image: ubuntu:cosmic
-  - name: ubuntu-trusty
-    image: ubuntu:trusty
-  - name: ubuntu-xenial
-    image: ubuntu:xenial
+  - name: instance
+    image: ${MOLECULE_DISTRO:-centos:7}
 provisioner:
   name: ansible
   lint:
