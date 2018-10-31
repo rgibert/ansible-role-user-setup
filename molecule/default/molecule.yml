@@ -1,0 +1,41 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: centos-6
+    image: centos:6
+  - name: centos-7
+    image: centos:7
+  - name: ubuntu-artful
+    image: ubuntu:artful
+  - name: ubuntu-bionic
+    image: ubuntu:bionic
+  - name: ubuntu-cosmic
+    image: ubuntu:cosmic
+  - name: ubuntu-trusty
+    image: ubuntu:trusty
+  - name: ubuntu-xenial
+    image: ubuntu:xenial
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+scenario:
+  name: default
+  test_sequence:
+    - lint
+    - destroy
+    - syntax
+    - create
+    - converge
+    - idempotence
+    - verify
+    - destroy
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

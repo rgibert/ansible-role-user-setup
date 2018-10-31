@@ -30,17 +30,16 @@ Ansible role to handle common user / group setup
 - hosts:
     - servers
   roles:
-    - { role: rgibert.user-setup, user_setup_group: users, user_setup_username: user0 }
+    - role: rgibert.user-setup
+      user_setup_group: users
+      user_setup_username: user0
 ```
 
-License
--------
+## License
 
 GPL-3
 
-Author Information
-------------------
+## Author Information
 
 Richard Gibert
 richard@gibert.ca
-

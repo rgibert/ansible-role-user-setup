@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: ansible-role-user-setup
+      user_setup_username: testuser0
+      user_setup_group: testgroup0
