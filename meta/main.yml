@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: user_setup
   author: Richard Gibert
   description: User Setup
   license: GPLv3
@@ -17,6 +18,5 @@ galaxy_info:
         - trusty
         - xenial
   galaxy_tags:
-    - user-setup
-
+    - user_setup
 dependencies: []
