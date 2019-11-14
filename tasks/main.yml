@@ -16,5 +16,7 @@
     when:
       - user_setup_username != "root"
 
+  become: true
+  become_user: root
   tags:
     - user_setup

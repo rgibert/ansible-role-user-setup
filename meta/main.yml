@@ -2,6 +2,7 @@
 galaxy_info:
   role_name: user_setup
   author: Richard Gibert
+  company: Gibert.ca
   description: User Setup
   license: GPLv3
   min_ansible_version: 1.2
@@ -12,11 +13,10 @@ galaxy_info:
         - 7
     - name: Ubuntu
       versions:
-        - artful
         - bionic
-        - cosmic
+        - eoan
         - trusty
         - xenial
   galaxy_tags:
-    - user_setup
+    - usersetup
 dependencies: []
