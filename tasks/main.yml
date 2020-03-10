@@ -79,8 +79,7 @@
       - path: "{{ user_setup_home }}/.gitignore"
         line: "${HOME}/.config/dotfiles"
 
-  - name: zsh special items
-    block:
+  - block:
 
       - name: install git
         package:
@@ -89,13 +88,13 @@
 
       - name: clone oh-my-zsh for zsh users
         git:
-          repo: "git@github.com:ohmyzsh/ohmyzsh.git"
-          dest: "/usr/local/share/oh-my-zsh"
+          repo: git@github.com:ohmyzsh/ohmyzsh.git
+          dest: /usr/local/share/oh-my-zsh
           clone: true
           update: true
 
     when:
-      - "{{ user_setup_shell | basename }}" == "zsh"
+      - user_setup_shell | basename == "zsh"
 
   become: true
   become_user: root
