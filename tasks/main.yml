@@ -88,8 +88,8 @@
 
       - name: clone oh-my-zsh for zsh users
         git:
-          repo: git@github.com:ohmyzsh/ohmyzsh.git
-          dest: /usr/local/share/oh-my-zsh
+          repo: "https://github.com/ohmyzsh/ohmyzsh.git"
+          dest: "/usr/local/share/oh-my-zsh"
           clone: true
           update: true
 
