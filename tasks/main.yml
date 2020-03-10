@@ -52,14 +52,41 @@
       - ".local/lib"
       - ".local/share"
 
-  - name: create standard files
+  - name: stat ~/.config/aliases
+    stat:
+      path: "{{ user_setup_home }}/.config/aliases"
+    register: home_config_aliases
+
+  - name: create ~/.config/aliases if missing
     file:
       state: touch
-      path: "{{ item }}"
-    loop:
-      - "{{ user_setup_home }}/.config/aliases"
-      - "{{ user_setup_home }}/.config/vars"
-      - "{{ user_setup_home }}/.gitignore"
+      path: "{{ user_setup_home }}/.config/aliases"
+    when:
+      - home_config_aliases.exists is not defined
+
+  - name: stat ~/.config/vars
+    stat:
+      path: "{{ user_setup_home }}/.config/vars"
+    register: home_config_vars
+
+  - name: create ~/.config/vars if missing
+    file:
+      state: touch
+      path: "{{ user_setup_home }}/.config/vars"
+    when:
+      - home_config_vars.exists is not defined
+
+  - name: stat ~/.gitignore
+    stat:
+      path: "{{ user_setup_home }}/.gitignore"
+    register: home_gitignore
+
+  - name: create ~/.config/vars if missing
+    file:
+      state: touch
+      path: "{{ user_setup_home }}/.gitignore"
+    when:
+      - home_gitignore.exists is not defined
 
   - name: setup standard files
     lineinfile:
