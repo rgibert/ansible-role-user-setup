@@ -1,13 +1,38 @@
 ---
 - block:
 
+  - name: install shell
+    package:
+      name: "{{ user_setup_shell | basename }}"
+      state: present
+
+  - name: create group
+    group:
+      name: "{{ user_setup_group }}"
+      gid: "{{ user_setup_gid }}"
+    when:
+      - user_setup_group != "root"
+      - user_setup_gid is defined
+
   - name: create group
     group:
       name: "{{ user_setup_group }}"
     when:
       - user_setup_group != "root"
+      - user_setup_gid is not defined
 
-  - name: create users
+  - name: create user
+    user:
+      name: "{{ user_setup_username }}"
+      group: "{{ user_setup_group }}"
+      shell: "{{ user_setup_shell }}"
+      home: "{{ user_setup_home }}"
+      uid: "{{ user_setup_uid }}"
+    when:
+      - user_setup_username != "root"
+      - user_setup_uid is defined
+
+  - name: create user
     user:
       name: "{{ user_setup_username }}"
       group: "{{ user_setup_group }}"
@@ -15,6 +40,62 @@
       home: "{{ user_setup_home }}"
     when:
       - user_setup_username != "root"
+      - user_setup_uid is not defined
+
+  - name: create standard dirs
+    file:
+      state: directory
+      path: "{{ user_setup_home }}/{{ item }}"
+    loop:
+      - ".config"
+      - ".local/bin"
+      - ".local/lib"
+      - ".local/share"
+
+  - name: create standard files
+    file:
+      state: touch
+      path: "{{ item }}"
+    loop:
+      - "{{ user_setup_home }}/.config/aliases"
+      - "{{ user_setup_home }}/.config/vars"
+      - "{{ user_setup_home }}/.gitignore"
+
+  - name: setup standard files
+    lineinfile:
+      path: "{{ item.path }}"
+      state: present
+      regexp: "^{{ item.line }}"
+      line: "{{ item.line }}"
+    loop:
+      - path: "{{ user_setup_home }}/.bashrc"
+        line: "if [ -f ~/.config/aliases ]; then source ~/.config/aliases; fi"
+      - path: "{{ user_setup_home }}/.bashrc"
+        line: "if [ -f ~/.config/vars ]; then source ~/.config/vars; fi"
+      - path: "{{ user_setup_home }}/.config/aliases"
+        line: "alias dotgit='/usr/bin/git --git-dir=${HOME}/.config/dotfiles/ --work-tree=${HOME}'"
+      - path: "{{ user_setup_home }}/.config/vars"
+        line: 'export PATH="${PATH}:${HOME}/.local/bin"'
+      - path: "{{ user_setup_home }}/.gitignore"
+        line: "${HOME}/.config/dotfiles"
+
+  - name: zsh special items
+    block:
+
+      - name: install git
+        package:
+          name: git
+          state: present
+
+      - name: clone oh-my-zsh for zsh users
+        git:
+          repo: "git@github.com:ohmyzsh/ohmyzsh.git"
+          dest: "/usr/local/share/oh-my-zsh"
+          clone: true
+          update: true
+
+    when:
+      - "{{ user_setup_shell | basename }}" == "zsh"
 
   become: true
   become_user: root

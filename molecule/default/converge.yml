@@ -5,3 +5,7 @@
     - role: rgibert.user_setup
       user_setup_username: testuser0
       user_setup_group: testgroup0
+    - role: rgibert.user_setup
+      user_setup_username: testuser1
+      user_setup_group: testgroup1
+      user_setup_shell: /bin/zsh
